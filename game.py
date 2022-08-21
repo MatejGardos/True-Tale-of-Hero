@@ -183,8 +183,8 @@ actions = Actions()
 
 
 @app.route("/")
-def menu():
-    return render_template("menu.html")
+def index():
+    return render_template("index.html")
 
 @app.route("/prologue")
 def prologue():
@@ -334,7 +334,7 @@ def loot_weapon():
                             weapon2=equipment["weapon2"], armor=equipment["armor"], cheese=equipment["cheese"])
 
     elif request.method == "GET":
-        return render_template("menu.html")
+        return render_template("index.html")
 
 @app.route("/loot-armor", methods=["GET", "POST"])
 def loot_armor():
@@ -354,7 +354,7 @@ def loot_armor():
                             weapon2=equipment["weapon2"], armor=equipment["armor"], cheese=equipment["cheese"])
         
     elif request.method == "GET":
-        return render_template("menu.html")
+        return render_template("index.html")
 
 @app.route("/game-over")
 def game_over():
