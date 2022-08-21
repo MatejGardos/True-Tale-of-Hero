@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/main.css">
+    <title>Settings</title>
+</head>
+<body>
+    <div class="container">
+        <div class="difficulty">
+            {{difficulty | safe}}
+        </div>
+        <div>
+            <form method="post" action="/settings">
+                <input class="settings-btn" type="submit" value="Easy" name="Easy"> <br>
+                <input class="settings-btn" type="submit" value="Very Easy" name="Very Easy" > <br>
+                <input class="settings-btn" type="submit" value="Extremely Easy" name="Extremely Easy"> <br>
+            </form>
+        </div>
+        <div class="back_to_menu">
+            <a href="{{ url_for('menu') }}"><button class="btn">Menu</button></a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,223 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #1c1c1c;
+}
+
+.container {
+    width: 800px;
+    height: 500px;
+    max-width: 80%;
+    max-height: 80%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 2px;
+    text-align: center;
+}
+
+.title {
+    font-size: 60px;
+    margin-bottom: 70px;
+}
+
+.btn {
+    width: 320px;
+    height: 70px;
+    margin: 20px;
+    font-size: 25px;
+    background-color: #252525;
+    border: #1e1d1d;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    outline: none;
+}
+
+.btn:hover {
+    background-color: #252525bb ;
+    border-color: black;
+}
+
+
+.difficulty {
+    font-size: 30px;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+.settings-btn {
+    width: 300px;
+    height: 50px;
+    margin: 10px;
+    font-size: 25px;
+    background-color: #7b7b7b;
+    border: #656565;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    outline: none;
+}
+
+.settings-btn:hover {
+    background-color: #4b4b4b;
+    border-color: black;
+}
+
+.back_to_menu {
+    margin-top: 65px;
+}
+
+.btn-right-bottom {
+    position: absolute;
+    right: 230px;
+    bottom: 50px;
+    width: 220px;
+    height: 50px;
+    margin: 20px;
+    font-size: 25px;
+    background-color: #252525;
+    border: #1e1d1d;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    outline: none;
+}
+
+.btn-right-bottom:hover {
+    background-color: #252525bb ;
+    border-color: black;
+}
+
+.warning_message {
+    position: absolute;
+    bottom: 35%;
+    left: 45%;
+    color: red;
+    font-size: 20px;
+}
+
+.btn-grid {
+    position: absolute;
+    bottom: 12%;
+    left: 25%;
+}
+
+.game-btn {
+    width: 300px;
+    height: 50px;
+    font-size: 25px;
+    margin: 10px;
+    display: fixed;
+    background-color: #19194d;
+    border: #131339;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    outline: none;
+}
+
+.game-btn:hover {
+    background-color: #202060bb;
+    border-color: black;
+}
+
+.left-container {
+    width: 200px;
+    height: 500px;
+    max-width: 80%;
+    max-height: 80%;
+    position: absolute;
+    left: 2%;
+    top: 10%;
+    background-color: white; 
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 2px;
+    text-align: center
+}
+
+.right-container {
+    width: 200px;
+    height: 500px;
+    max-width: 80%;
+    max-height: 80%;
+    position: absolute;
+    right: 2%;
+    top: 10%;
+    background-color: white; 
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 2px;
+    text-align: center
+}
+
+
+.left-container h3 {
+    position: absolute;
+    bottom: -2%;
+    left: 30%;
+}
+
+.gameover {
+    font-size: 80px;
+    margin: 80px;
+}
+
+.end-message {
+    font-size: 40px;
+    margin: 30px;
+}
+
+.loot-btn-grid {
+    position: absolute;
+    bottom: 12%;
+    left: 25%;
+}
+
+.loot-btn {
+    width: 300px;
+    height: 50px;
+    font-size: 25px;
+    margin: 10px;
+    display: fixed;
+    background-color: #19194d;
+    border: #131339;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    outline: none;
+}
+
+.loot-btn:hover {
+    background-color: #202060bb;
+    border-color: black;
+}
+
+.bottom-btn {
+    width: 320px;
+    height: 70px;
+    margin: 20px;
+    font-size: 25px;
+    background-color: #252525;
+    border: #1e1d1d;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    outline: none;
+}
+
+.bottom-btn:hover {
+    background-color: #252525bb ;
+    border-color: black;
+}

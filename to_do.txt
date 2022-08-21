@@ -1,0 +1,15 @@
+Implement armor/resistance                                                      DONE
+Create functioning reset                                                        DONE
+Add more weapons (hammer, katana, pure nail, dagger, steel sword, steel axe)    DONE-kinda
+Add more armor (iron armor, steel armor)                                        DONE-kinda
+Add more enemies                                                                DONE-kinda
+Change placeholder2 ("inventory")
+Add ending(s)                                                                   DONE
+Add story
+Add boss                                                                        DONE
+Add description to enemies
+Style all html
+Fix difficulty (it moves when on extremely easy)
+
+Probably put stats and stuff in json file                                       NOPE
+Maybe add random damage (every weapon has its own)
