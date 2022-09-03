@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/main.css">
+    <title>Inventory</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Inventory</h1>
+        <div class="inventory">
+            Health: {{health | safe}}  &nbsp;&nbsp;
+            Arrows: {{arrows | safe}}  &nbsp;&nbsp;
+            Cheese: {{cheese | safe}} &nbsp;&nbsp;
+            Gold: {{gold | safe}}
+            <br>
+            <br>
+            Melee Weapon: {{melee_weapon | safe}} {{melee_attack | safe}} <br>
+            Ranged Weapon: {{ranged_weapon | safe}} {{ranged_attack | safe}} <br>
+            Armor: {{armor | safe}} {{resistance | safe}} <br>
+            <br>
+            <h3>Difficulty: {{difficulty | safe}}</h3>
+        </div>
+        <div class=""></div>
+            <a href="{{ url_for('game') }}"><button class="btn">Back</button></a>
+        </div>
+
+    </div>
+</body>
+</html>

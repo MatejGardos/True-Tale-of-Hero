@@ -19,29 +19,15 @@
         </div>
         <div class="btn-grid">
             <form method="post" action="/game">
-                <input class="game-btn" type="submit" value="Attack1" name="Attack1">
-                <input class="game-btn" type="submit" value="Attack2" name="Attack2"> <br>
-                <input class="game-btn" type="submit" value="Placeholder2" name="Placeholder2"> 
-                <input class="game-btn" type="submit" value="Heal" name="Heal">
+                <input class="game-btn" type="submit" value="Strike" name="Strike">
+                <input class="game-btn" type="submit" value="Shoot" name="Shoot">
+                <input class="game-btn" type="submit" value="Heal" name="Heal"> 
+                <input class="game-btn" type="submit" value="Inventory" name="Inventory">
             </form>
         </div>
-    </div>
-
-    <div class="left-container">
-        <h1>Stats:</h1>
-        <h2>Health: <br> {{health | safe}}</h2>
-        <h2>Resistance: <br> {{resistance | safe}}</h2>
-        <h2>Attack1: <br> {{attack1 | safe}}</h2>
-        <h2>Attack2: <br>  {{attack2 | safe}}</h2>
-        <h3>Difficulty: <br> {{difficulty | safe}}</h3>
-    </div>
-    
-    <div class="right-container">
-        <h1>Equipment:</h1>
-        <h2>Weapon1: <br> {{weapon1 | safe}}</h2>
-        <h2>Weapon2: <br> {{weapon2 | safe}}</h2>
-        <h2>Armor: <br> {{armor | safe}}</h2>
-        <h2>Cheese: <br> {{cheese | safe}}</h2>
+        <div class="main-stats">
+            <h3>Health: {{health | safe}} &nbsp;&nbsp; Cheese: {{cheese |safe }} &nbsp;&nbsp; Arrows: {{arrows | safe}}</h3>
+        </div>
     </div>
 
 </body>

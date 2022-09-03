@@ -1,0 +1,69 @@
+{ 
+    "melee_weapons":{
+        "Iron Sword": 5,
+        "Iron Axe": 7,
+        "Steel Sword": 8,
+        "Steel Axe": 10,
+        "Hammer": 12,
+        "Katana": 11,
+        "Dagger": 4,
+        "Pure Nail": 9
+    },
+
+    "ranged_weapons":{
+        "Simple Bow": 4,
+        "Long Bow": 8,
+        "Hunter's Bow": 12,
+        "Crossbow": 10
+    },
+
+    "armor":{
+        "Leather Armor": 1,
+        "Iron Armor": 3,
+        "Steel Armor": 5
+        },
+
+    "equipment":{
+            "melee_weapon": "Iron Sword",
+            "ranged_weapon": "Simple Bow",
+            "arrows": 5,
+            "armor": "Leather Armor",
+            "cheese": 3,
+            "gold": 10
+        },
+
+    "stats":{
+            "health": 50,
+            "resistance": "self.armor[self.equipment['armor']]",
+            "melee_attack": "self.weapons[self.equipment['melee_weapon']]",
+            "ranged_attack": "self.weapons[self.equipment['ranged_weapon']]"
+        },
+
+    "enemies":{
+        "Goblin":{
+            "hp": 20,
+            "attk": 4,
+            "description": "Little mischievous annoying creature."
+        },
+        "Bandit":{
+            "hp": 30,
+            "attk": 10,
+            "description": "They could have become a hero but had chosen path of evil."
+        },
+        "Golem":{
+            "hp": 50,
+            "attk": 8,
+            "description": "Big boulder. Brother of stone. Hopefully you didn't hurt his little brother."
+        },
+        "Stone":{
+            "hp": 5,
+            "attk": 0,
+            "description": "It's a stone. Just a stone. You have decided to attack stone. How heroic..." 
+        },
+        "Werewolf":{
+            "hp": 25,
+            "attk": 6,
+            "description": "Maybe if he wouldn't be angry. He would be cute puppy."
+        }
+    }
+}

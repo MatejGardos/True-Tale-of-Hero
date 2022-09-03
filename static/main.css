@@ -16,7 +16,8 @@ body {
 
 .container {
     width: 800px;
-    height: 500px;
+    height: auto;
+    min-height: 400px;
     max-width: 80%;
     max-height: 80%;
     background-color: white;
@@ -26,16 +27,11 @@ body {
     text-align: center;
 }
 
-.title {
-    font-size: 60px;
-    margin-bottom: 70px;
-}
-
 .btn {
-    width: 320px;
+    width: 50%;
     height: 70px;
-    margin: 20px;
-    font-size: 25px;
+    margin: 3%;
+    font-size: 140%;
     background-color: #252525;
     border: #1e1d1d;
     border-radius: 5px;
@@ -49,18 +45,17 @@ body {
     border-color: black;
 }
 
-
 .difficulty {
-    font-size: 30px;
-    margin-top: 25px;
-    margin-bottom: 20px;
+    font-size: 150%;
+    margin-top: 3%;
+    margin-bottom: 2%;
 }
 
 .settings-btn {
-    width: 300px;
+    width: 50%;
     height: 50px;
-    margin: 10px;
-    font-size: 25px;
+    margin: 3%;
+    font-size: 140%;
     background-color: #7b7b7b;
     border: #656565;
     border-radius: 5px;
@@ -74,50 +69,16 @@ body {
     border-color: black;
 }
 
-.back_to_menu {
-    margin-top: 65px;
-}
-
-.btn-right-bottom {
-    position: absolute;
-    right: 230px;
-    bottom: 50px;
-    width: 220px;
-    height: 50px;
-    margin: 20px;
-    font-size: 25px;
-    background-color: #252525;
-    border: #1e1d1d;
-    border-radius: 5px;
-    padding: 5px;
-    color: white;
-    outline: none;
-}
-
-.btn-right-bottom:hover {
-    background-color: #252525bb ;
-    border-color: black;
-}
-
-.warning_message {
-    position: absolute;
-    bottom: 35%;
-    left: 45%;
-    color: red;
-    font-size: 20px;
-}
-
 .btn-grid {
-    position: absolute;
-    bottom: 12%;
-    left: 25%;
+    position: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .game-btn {
-    width: 300px;
+    width: 40%;
     height: 50px;
-    font-size: 25px;
-    margin: 10px;
+    font-size: 130%;
+    margin: 1%;
     display: fixed;
     background-color: #19194d;
     border: #131339;
@@ -132,92 +93,30 @@ body {
     border-color: black;
 }
 
-.left-container {
-    width: 200px;
-    height: 500px;
-    max-width: 80%;
-    max-height: 80%;
-    position: absolute;
-    left: 2%;
-    top: 10%;
-    background-color: white; 
+.main-stats {
+    width: auto;
+    height: 10%;
+    margin-top: 3%;
+    background-color: #CCCCCC;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 0 10px 2px;
-    text-align: center
+    text-align: center;
 }
 
-.right-container {
-    width: 200px;
-    height: 500px;
-    max-width: 80%;
-    max-height: 80%;
-    position: absolute;
-    right: 2%;
-    top: 10%;
-    background-color: white; 
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px 2px;
-    text-align: center
+.warning_message {
+    color: red;
+    font-size: 130%;
 }
 
-
-.left-container h3 {
-    position: absolute;
-    bottom: -2%;
-    left: 30%;
+.inventory {
+    font-size: 130%;
 }
 
-.gameover {
-    font-size: 80px;
-    margin: 80px;
+.title {
+    font-size: 300%;
 }
 
-.end-message {
-    font-size: 40px;
-    margin: 30px;
-}
-
-.loot-btn-grid {
-    position: absolute;
-    bottom: 12%;
-    left: 25%;
-}
-
-.loot-btn {
-    width: 300px;
-    height: 50px;
-    font-size: 25px;
-    margin: 10px;
-    display: fixed;
-    background-color: #19194d;
-    border: #131339;
-    border-radius: 5px;
-    padding: 5px;
-    color: white;
-    outline: none;
-}
-
-.loot-btn:hover {
-    background-color: #202060bb;
-    border-color: black;
-}
-
-.bottom-btn {
-    width: 320px;
-    height: 70px;
-    margin: 20px;
-    font-size: 25px;
-    background-color: #252525;
-    border: #1e1d1d;
-    border-radius: 5px;
-    padding: 5px;
-    color: white;
-    outline: none;
-}
-
-.bottom-btn:hover {
-    background-color: #252525bb ;
-    border-color: black;
+.btn-small {
+    margin: 10%;
+    font-size: 110%;
 }

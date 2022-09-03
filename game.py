@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from random import choice, randint
+import json
 
 app = Flask(__name__)
 
@@ -10,72 +11,6 @@ enemies_defeated = 0
 boss = False
 boss_dead = False
 
-weapons = ("Iron Sword", "Iron Axe", "Steel Sword", "Steel Axe", "Hammer", "Katana", "Dagger", "Pure Nail", "Gun")
-weapons_stats = {
-    "None": 0,
-    "Iron Sword": 5,
-    "Iron Axe": 7,
-    "Steel Sword": 8,
-    "Steel Axe": 10,
-    "Hammer": 12,
-    "Katana": 11,
-    "Dagger": 4,
-    "Pure Nail": 9,
-    "Gun": 999
-}
-
-armor = ("Leather Armor", "Iron Armor", "Steel Armor", "Golden Pot")
-armor_stats = {
-    "None": 0,
-    "Leather Armor": 2,
-    "Iron Armor": 4,
-    "Steel Armor": 6,
-    "Golden Pot": 0
-    }
-
-equipment = {
-        "weapon1": "Iron Sword",
-        "weapon2": "None",
-        "armor": "None",
-        "cheese": 3
-    }
-
-stats = {
-        "health": 50,
-        "resistance": armor_stats[equipment["armor"]],
-        "attack1": weapons_stats[equipment["weapon1"]],
-        "attack2": weapons_stats[equipment["weapon2"]]
-    }
-
-enemies = ("Goblin", "Bandit", "Golem", "Stone", "Werewolf")
-enemies_stats = {
-    "Goblin":{
-        "hp": 20,
-        "attk": 4,
-        "description": "Little mischievous annoying creature."
-    },
-    "Bandit":{
-        "hp": 30,
-        "attk": 10,
-        "description": "They could have become a hero but had chosen path of evil."
-    },
-    "Golem":{
-        "hp": 50,
-        "attk": 8,
-        "description": "Big boulder. Brother of stone. Hopefully you didn't hurt his little brother."
-    },
-    "Stone":{
-        "hp": 5,
-        "attk": 0,
-        "description": "It's a stone. Just a stone. You have decided to attack stone. How heroic..." 
-    },
-    "Werewolf":{
-        "hp": 25,
-        "attk": 6,
-        "description": "Maybe if he wouldn't be angry. He would be cute puppy."
-    }
-}
-
 boss = {
     "hp": 150,
     "attk": 15,
@@ -85,8 +20,23 @@ boss = {
 
 class Actions():
     def __init__(self):
-        self.equipment = equipment
-        self.stats = stats
+        with open("stats_and_stuff.json", "r") as json_file:
+            content = json.load(json_file)
+            self.equipment = content["equipment"]
+            self.stats = content["stats"]
+            self.melee_weapons = content["melee_weapons"]
+            self.ranged_weapons = content["ranged_weapons"]
+            self.armor = content["armor"]
+            self.enemies = content["enemies"]
+
+            stats = {
+                "resistance": int(self.armor[self.equipment["armor"]]),
+                "melee_attack": int(self.melee_weapons[self.equipment["melee_weapon"]]),
+                "ranged_attack": int(self.ranged_weapons[self.equipment["ranged_weapon"]])
+            }
+            self.stats.update(stats)
+
+            self.warning_message = ""
 
     def create_enemy(self):
         if boss == True:
@@ -97,54 +47,50 @@ class Actions():
                 "Description": "to be"
             }
         else:
-            self.current_enemy = choice(enemies)
+            self.current_enemy = choice(tuple(self.enemies.keys()))
             self.enemy = {
-                "Hp": int(enemies_stats[self.current_enemy]["hp"] * difficulty[current_difficulty]),
-                "Attk": int(enemies_stats[self.current_enemy]["attk"] * difficulty[current_difficulty]),
-                "Description": enemies_stats[self.current_enemy]["description"]
+                "Hp": int(self.enemies[self.current_enemy]["hp"] * difficulty[current_difficulty]),
+                "Attk": int(self.enemies[self.current_enemy]["attk"] * difficulty[current_difficulty]),
+                "Description": self.enemies[self.current_enemy]["description"]
             }
 
-    def attack1(self):
-        self.enemy["Hp"] = self.enemy["Hp"] - self.stats["attack1"]
+    def melee_attack(self):
+        self.enemy["Hp"] = self.enemy["Hp"] - self.stats["melee_attack"]
 
         if (self.enemy["Attk"] - self.stats["resistance"]) > 1:
             self.stats["health"] = self.stats["health"] - (self.enemy["Attk"] -self.stats["resistance"])
         else:
             self.stats["health"] = self.stats["health"]
 
-        if equipment["weapon1"] == "Gun":
-            equipment["weapon1"] = "None"
-            self.stats["attack1"] = weapons_stats[self.equipment["weapon1"]]
+        self.warning_message = ""
 
 
-    def attack2(self):
-        self.enemy["Hp"] = self.enemy["Hp"] - self.stats["attack2"]
+    def ranged_attack(self):
+        if self.equipment["arrows"] > 0:
+            self.enemy["Hp"] = self.enemy["Hp"] - self.stats["ranged_attack"]
+            self.equipment["arrows"] = self.equipment["arrows"] - 1
 
-        if (self.enemy["Attk"] - self.stats["resistance"]) > 1:
-            self.stats["health"] = self.stats["health"] - (self.enemy["Attk"] -self.stats["resistance"])
+            self.warning_message = ""
+
         else:
-            self.stats["health"] = self.stats["health"]
-
-        if equipment["weapon2"] == "Gun":
-            equipment["weapon2"] = "None"
-            self.stats["attack2"] = weapons_stats[self.equipment["weapon2"]]
+            self.warning_message = "Not enough arrows"
 
     def heal(self):
-        global warning_message
         if self.equipment["cheese"] != 0 and self.stats["health"] != 50:
             self.stats["health"] = self.stats["health"] + 20
             self.equipment["cheese"] = self.equipment["cheese"] - 1
+            self.warning_message = ""
 
             if self.stats["health"] > 50:
                 self.stats["health"] = 50
                 
         else:
-            warning_message = "You cannot heal"
+            self.warning_message = "You cannot heal"
     
     def text_(self):
         self.name = self.current_enemy
         self.description = "Health: {}       Attack: {}<br><br>{}".format(self.enemy["Hp"], self.enemy["Attk"], self.enemy["Description"])
-        return self.name, self.description
+        return self.name, self.description, self.warning_message, self.stats["health"], self.equipment["cheese"], self.equipment["arrows"]
     
     def is_dead(self):
         if self.enemy["Hp"] <= 0:
@@ -153,60 +99,93 @@ class Actions():
             return False
 
     def loot(self):
-        self.cheese = randint(0,3)
-        self.equipment["cheese"] = self.equipment["cheese"] + self.cheese
-        self.weapon = choice(weapons)
-        self.armor = choice(armor)
+        self.loot_items = ""
+        self.item_out = choice(("cheese","arrows","gold"))
 
-    def equip1(self):
-        self.equipment["weapon1"] = self.weapon
-        self.stats["attack1"] = weapons_stats[self.equipment["weapon1"]]
+        if self.item_out != "cheese":
+            self.cheese = randint(0,3)
+            self.equipment["cheese"] = self.equipment["cheese"] + self.cheese
+            self.loot_items = str(self.cheese) + " cheese"
 
-    def equip2(self):
-        self.equipment["weapon2"] = self.weapon
-        self.stats["attack2"] = weapons_stats[self.equipment["weapon2"]]
+        if self.item_out != "arrows":
+            self.arrows = randint(0,4)
+            self.equipment["arrows"] = self.equipment["arrows"] + self.arrows
+            if self.loot_items != "":
+                self.loot_items = self.loot_items + ", "
+            self.loot_items = self.loot_items + str(self.arrows) + " arrows"
+
+        if self.item_out != "gold":
+            self.gold = randint(0,5)
+            self.equipment["gold"] = self.equipment["gold"] + self.gold
+            if self.loot_items != "":
+                self.loot_items = self.loot_items + ", "
+            self.loot_items = self.loot_items + str(self.gold) + " gold"
+
+        self.item = choice(("melee","ranged","armor"))
+        if self.item == "melee":
+            self.loot_item = choice(tuple(self.melee_weapons.keys()))
+        elif self.item == "ranged":
+            self.loot_item = choice(tuple(self.ranged_weapons.keys()))
+        elif self.item == "armor":
+            self.loot_item = choice(tuple(self.armor.keys()))
+
+    def equip_melee_weapon(self):
+        self.equipment["melee_weapon"] = self.loot_item
+        self.stats["melee_attack"] = self.melee_weapons[self.equipment["melee_weapon"]]
+
+    def equip_ranged_weapon(self):
+        self.equipment["ranged_weapon"] = self.loot_item
+        self.stats["ranged_attack"] = self.ranged_weapons[self.equipment["ranged_weapon"]]
 
     def equip_armor(self):
-        self.equipment["armor"] = self.armor
-        self.stats["resistance"] = armor_stats[self.equipment["armor"]]
+        self.equipment["armor"] = self.loot_item
+        self.stats["resistance"] = self.armor[self.equipment["armor"]]
 
-    def loot_weapon_text(self):
-        self.text = "You have defeated {}. <br> You found {} cheese and {} ({} dmg).".format(self.current_enemy, self.cheese, self.weapon, weapons_stats[self.weapon]) 
-        return self.text
+    def loot_text(self):
+        if self.item == "melee":
+            self.item_stats = self.melee_weapons[self.loot_item]
+            self.cur_item = self.equipment["melee_weapon"]
+            self.cur_item_stats = self.stats["melee_attack"]
+        elif self.item == "ranged":
+            self.item_stats = self.ranged_weapons[self.loot_item]
+            self.cur_item = self.equipment["ranged_weapon"]
+            self.cur_item_stats = self.stats["ranged_attack"]
+        elif self.item == "armor":
+            self.item_stats = self.armor[self.loot_item]
+            self.cur_item = self.equipment["armor"]
+            self.cur_item_stats = self.stats["resistance"]
+            
+        self.text = "You have defeated {}. <br> You found {} <br> and {} ({}). Now you have equiped {} ({}).".format(self.current_enemy, self.loot_items, self.loot_item, self.item_stats, self.cur_item, self.cur_item_stats) 
+        return self.text, self.item
 
-    def loot_armor_text(self):
-        self.text = "You have defeated {}. <br> You found {} cheese and {} ({}).".format(self.current_enemy, self.cheese, self.armor, armor_stats[self.armor]) 
-        return self.text
+    def player_health(self):
+        if self.stats["health"] <= 15:
+            self.warning_message = "Your health is low"
+
+    def player_dead(self):
+        if self.stats["health"] <= 0:
+            return True
+        return False
+
+    def inventory(self):
+        return self.stats["health"], self.equipment["melee_weapon"], self.stats["melee_attack"], self.equipment["ranged_weapon"], self.stats["ranged_attack"], self.equipment["arrows"], self.equipment["armor"], self.stats["resistance"], self.equipment["cheese"], self.equipment["gold"]
 
 actions = Actions()
 
 
 
 @app.route("/")
-def index():
-    return render_template("index.html")
+def menu():
+    return render_template("menu.html")
 
 @app.route("/prologue")
 def prologue():
-    global boss, boss_dead, enemies_defeated, stats, equipment
+    global boss, boss_dead, enemies_defeated
     boss = False
     boss_dead = False
     enemies_defeated = 0
-
-    equipment = {
-            "weapon1": "Iron Sword",
-            "weapon2": "None",
-            "armor": "None",
-            "cheese": 3
-    }
-
-    stats = {
-            "health": 50,
-            "resistance": armor_stats[equipment["armor"]],
-            "attack1": weapons_stats[equipment["weapon1"]],
-            "attack2": weapons_stats[equipment["weapon2"]]
-    }
     actions.__init__()
+    actions.create_enemy()
     return render_template("prologue.html")
 
 @app.route("/settings", methods=["GET", "POST"])
@@ -229,42 +208,31 @@ def settings():
 
 @app.route("/game", methods=["GET", "POST"])
 def game():
-    global warning_message, equipment, stats, enemies_defeated, boss, enemies, enemies_stats, boss_dead, current_difficulty
-    warning_message = ""
+    global enemies_defeated, boss, boss_dead, current_difficulty
 
     if request.method == "POST":
-        if request.form.get("Attack1") == "Attack1":
-            actions.attack1()           
+        if request.form.get("Strike") == "Strike":
+            actions.melee_attack()           
 
-        elif request.form.get("Attack2") == "Attack2":
-            actions.attack2()
-
-        elif request.form.get("Placeholder2") == "Placeholder2":
-           pass
+        elif request.form.get("Shoot") == "Shoot":
+            actions.ranged_attack()
 
         elif request.form.get("Heal") == "Heal":
-            actions.heal()
+           actions.heal()
+
+        elif request.form.get("Inventory") == "Inventory":
+            health, melee_weapon, melee_attack, ranged_weapon, ranged_attack, arrows, armor, resistance, cheese, gold = actions.inventory()
+            return render_template("inventory.html", health=health, melee_weapon=melee_weapon, melee_attack=melee_attack,
+                                    ranged_weapon=ranged_weapon, ranged_attack=ranged_attack, arrows=arrows, armor=armor,
+                                    resistance=resistance, cheese=cheese, gold=gold, difficulty=current_difficulty)
         
 
-        #checking for players low health
-        if stats["health"] <= 15:
-            warning_message = "Your health is low"
+        actions.player_health()
 
-
-        #checking if player is dead
-        if stats["health"] <= 0:
-            #creating new enemy
-            if "Lost Soul" in enemies:
-                #updating dmg
-                enemies_stats["Lost Soul"].update({"attk": int((stats["attack1"]+stats["attack2"])/2)})
-            else:
-                enemies = enemies + ("Lost Soul",)
-                enemies_stats["Lost Soul"] = {"hp":25, "attk":int((stats["attack1"]+stats["attack2"])/2), "description": "Rumor says, it is a soul of a previous hero who decided to take this path but failed."}
-
+        if actions.player_dead() == True:
             end_message = "You died"
             return render_template("game_over.html", end_message=end_message)
         
-
         #checking if enemy is dead
         if actions.is_dead() == True:
             enemies_defeated = enemies_defeated + 1
@@ -284,77 +252,39 @@ def game():
 
             else:
                 actions.loot()
-                if choice(("weapon","armor")) == "weapon":
-                    text = actions.loot_weapon_text()
-                    return render_template("loot-weapon.html", text=text, health=stats["health"],
-                                        resistance=stats["resistance"], attack1=stats["attack1"],
-                                        attack2=stats["attack2"], difficulty=current_difficulty, weapon1=equipment["weapon1"],
-                                        weapon2=equipment["weapon2"], armor=equipment["armor"], cheese=equipment["cheese"])
-                else:
-                    text = actions.loot_armor_text()
-                    return render_template("loot-armor.html", text=text, health=stats["health"],
-                                        resistance=stats["resistance"], attack1=stats["attack1"],
-                                        attack2=stats["attack2"], difficulty=current_difficulty, weapon1=equipment["weapon1"],
-                                        weapon2=equipment["weapon2"], armor=equipment["armor"], cheese=equipment["cheese"])
-
+                text,item = actions.loot_text()
+                return render_template("loot.html", text=text)
 
     elif request.method == "GET":
-        actions.create_enemy()
-        name, description = actions.text_()
-        return render_template("game.html", name=name, description=description, warning_message=warning_message,
-                        health=stats["health"], resistance=stats["resistance"], attack1=stats["attack1"],
-                        attack2=stats["attack2"], difficulty=current_difficulty, weapon1=equipment["weapon1"],
-                        weapon2=equipment["weapon2"], armor=equipment["armor"], cheese=equipment["cheese"])
+        name, description, warning_message, health, cheese, arrows = actions.text_()
+        return render_template("game.html", name=name, description=description, warning_message=warning_message, health=health, cheese=cheese, arrows=arrows)
 
-    name, description = actions.text_()
-    return render_template("game.html", name=name, description=description, warning_message=warning_message,
-                        health=stats["health"], resistance=stats["resistance"], attack1=stats["attack1"],
-                        attack2=stats["attack2"], difficulty=current_difficulty, weapon1=equipment["weapon1"],
-                        weapon2=equipment["weapon2"], armor=equipment["armor"], cheese=equipment["cheese"])
+    name, description, warning_message, health, cheese, arrows = actions.text_()
+    return render_template("game.html", name=name, description=description, warning_message=warning_message, health=health, cheese=cheese, arrows=arrows)
 
 
-@app.route("/loot-weapon", methods=["GET", "POST"])
-def loot_weapon():
+@app.route("/loot", methods=["GET", "POST"])
+def loot():
+    text,item = actions.loot_text()
     if request.method == "POST":
-        if request.form.get("Equip as Weapon1") == "Equip as Weapon1":
-            actions.equip1()
-
-        elif request.form.get("Equip as Weapon2") == "Equip as Weapon2":
-            actions.equip2()    
+        if request.form.get("Equip") == "Equip":
+            if item == "melee":
+                actions.equip_melee_weapon()
+            elif item == "ranged":
+                actions.equip_ranged_weapon()
+            elif item == "armor":
+                actions.equip_armor
 
         elif request.form.get("Continue") == "Continue":
             pass
 
-
         actions.create_enemy()
-        name, description = actions.text_()
-        return render_template("game.html", name=name, description=description, warning_message=warning_message,
-                            health=stats["health"], resistance=stats["resistance"], attack1=stats["attack1"],
-                            attack2=stats["attack2"], difficulty=current_difficulty, weapon1=equipment["weapon1"],
-                            weapon2=equipment["weapon2"], armor=equipment["armor"], cheese=equipment["cheese"])
+        name, description, warning_message, health, cheese, arrows = actions.text_()
+        return render_template("game.html", name=name, description=description, warning_message=warning_message, health=health, cheese=cheese, arrows=arrows)
 
     elif request.method == "GET":
-        return render_template("index.html")
+        return render_template("menu.html")
 
-@app.route("/loot-armor", methods=["GET", "POST"])
-def loot_armor():
-    if request.method == "POST":
-        if request.form.get("Equip armor") == "Equip armor":
-            actions.equip_armor()
-
-        elif request.form.get("Continue") == "Continue":
-            pass
-
-
-        actions.create_enemy()
-        name, description = actions.text_()
-        return render_template("game.html", name=name, description=description, warning_message=warning_message,
-                            health=stats["health"], resistance=stats["resistance"], attack1=stats["attack1"],
-                            attack2=stats["attack2"], difficulty=current_difficulty, weapon1=equipment["weapon1"],
-                            weapon2=equipment["weapon2"], armor=equipment["armor"], cheese=equipment["cheese"])
-        
-    elif request.method == "GET":
-        return render_template("index.html")
 
 @app.route("/game-over")
 def game_over():
@@ -362,10 +292,7 @@ def game_over():
     if boss_dead == False:
         end_message = "Ending: Coward" 
     else:
-        if equipment["armor"] == "Golden Pot":
-            end_message = "Ending: Madlad"
-        else:
-            end_message = "Ending: Merciful"    
+        end_message = "Ending: Merciful"    
 
     return render_template("game_over.html", end_message=end_message)
 
@@ -373,6 +300,13 @@ def game_over():
 def epilogue():
     return render_template("epilogue.html")
 
+@app.route("/how-to-play")
+def how_to_play():
+    return render_template("how-to-play.html")
+
+@app.route("/feedback")
+def feedback():
+    return render_template("feedback.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
