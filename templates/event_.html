@@ -9,11 +9,11 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="title">Epic</h1>
-        <div class="btn-grid">
-            <a href="{{ url_for('game_over') }}"><button class="bottom-btn">Run away</button></a>
-            <a href="{{ url_for('game') }}"><button class="bottom-btn">Continue</button></a>
+        <h1 class="title"></h1>
+        <div class="prologue">
+            <h3>{{post_event_text | safe}}</h3>
         </div>
+        <a href="{{ url_for('game') }}"><button class="btn">Continue</button></a>
     </div>
 </body>
 </html>

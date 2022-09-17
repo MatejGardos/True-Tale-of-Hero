@@ -6,8 +6,7 @@
         "Steel Axe": 10,
         "Hammer": 12,
         "Katana": 11,
-        "Dagger": 4,
-        "Pure Nail": 9
+        "Dagger": 4
     },
 
     "ranged_weapons":{
@@ -18,9 +17,9 @@
     },
 
     "armor":{
-        "Leather Armor": 1,
-        "Iron Armor": 3,
-        "Steel Armor": 5
+        "Leather Armor": 5,
+        "Iron Armor": 10,
+        "Steel Armor": 20
         },
 
     "equipment":{
@@ -33,6 +32,7 @@
         },
 
     "stats":{
+            "max_health": 50,
             "health": 50,
             "resistance": "self.armor[self.equipment['armor']]",
             "melee_attack": "self.weapons[self.equipment['melee_weapon']]",
@@ -64,6 +64,25 @@
             "hp": 25,
             "attk": 6,
             "description": "Maybe if he wouldn't be angry. He would be cute puppy."
+        }
+    },
+
+    "events":{
+        "Beggar":{
+            "text": "You see a beggar on the side of the road. He is asking for 20 gold. Do you give it to him?",
+            "yes": "You give him 10 gold and he thanks you and give you speacial herb (+5 max health).",
+            "no": "He tells you something in language you don't know."
+        },
+        "Bandit Camp":{
+            "text": "You notice in the distance a camp. You come closer to it and see it is a camp full of bandits. Are you going to rob them?",
+            "yes": "You were able to rob them and you gain some cheese, arrows and gold.",
+            "yes-fail": "You tried to rob them but got caught and lost 80% of your health.",
+            "no": "You decide you should not put yourself at that risk and then you leave."
+        },
+        "Blacksmith":{
+            "text": "Blacksmith can upgrade your melee weapon for a little price of 25 gold.",
+            "yes": "Your melee weapon is a little bit sharper.",
+            "no": "You decline and continue on your journey. "
         }
     }
 }

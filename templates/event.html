@@ -9,12 +9,17 @@
 </head>
 <body>
     <div class="container">
-        <h2>{{text | safe}}</h2>
-
+        <h2>{{title | safe}}</h2>
+        <h3>{{text | safe}}</h3>
+        
+        <div class="warning_message">
+            {{warning_message | safe}}
+        </div>
+        
         <div class="btn-grid">
-            <form method="post" action="/loot">
-                <input class="btn" type="submit" value="Equip" name="Equip">
-                <input class="btn" type="submit" value="Continue" name="Continue">
+            <form method="post" action="/event">
+                <input class="btn" type="submit" value="Yes" name="Yes">
+                <input class="btn" type="submit" value="No" name="No">
             </form>
         </div>
     </div>
