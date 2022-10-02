@@ -9,12 +9,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="gameover">
-            Game Over
-        </div>
-        <div class="end-message">
-            {{end_message | safe}}
-        </div>
+        <h1 class="title" style="margin: 1%;">Game Over</h1>
+        <h3> You died</h3>
+        <img scr="https://i.pinimg.com/originals/7d/3b/7b/7d3b7b947db23279316d313e3aad6057.jpg">
         <div class="back_to_menu">
             <a href="{{ url_for('menu') }}"><button class="btn">Menu</button></a>
         </div>

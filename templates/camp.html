@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/main.css">
+    <title>Game</title>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="title" style="margin: 1%;">Camp</h1>
+        <img src="https://i.pinimg.com/originals/12/f8/a9/12f8a9f0314e6b927a2fc104ee97bf2c.jpg">
+        <div class="btn-grid">
+            <form method="post" action="/camp">
+                <input class="game-btn" type="submit" value="Adventure" name="Adventure">
+                <input class="game-btn" type="submit" value="Village" name="Village">
+                <input class="game-btn" type="submit" value="Sleep" name="Sleep"> 
+                <input class="game-btn" type="submit" value="Castle" name="Castle">
+            </form>
+        </div>
+        <div class="main-stats">
+            <h3>Health: {{health | safe}} &nbsp;&nbsp; Cheese: {{cheese |safe }} &nbsp;&nbsp; Arrows: {{arrows | safe}} &nbsp;&nbsp; Gold: {{gold | safe}}</h3>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -5,25 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/main.css">
-    <title>Game</title>
+    <title>Jail</title>
 </head>
 <body>
-
     <div class="container">
-        <div class="text">
-            <h1>{{name | safe}}</h1>
-            <h3>{{description | safe}}</h3>
-        </div>
-        <img src="{{image}}">
+        <h1 class="title" style="margin: 1%;">Jail</h1>
+        <img src="https://i.pinimg.com/736x/38/55/c5/3855c5d9628cf4446054f05445547772.jpg">
+        <h3>
+            You are in jail. You can either serve your sentence or bribe a officer.
+            The bribe is not going to be cheap, it is going to cost you 20 gold.
+        </h3>
+        <h3>Days till freedom: {{sentence | safe}}</h3>
+        
         <div class="warning_message">
             {{warning_message | safe}}
         </div>
+        
         <div class="btn-grid">
-            <form method="post" action="/game">
-                <input class="game-btn" type="submit" value="Strike" name="Strike">
-                <input class="game-btn" type="submit" value="Shoot" name="Shoot">
-                <input class="game-btn" type="submit" value="Heal" name="Heal"> 
-                <input class="game-btn" type="submit" value="Inventory" name="Inventory">
+            <form method="post" action="/jail">
+                <input class="btn" type="submit" value="Bribe" name="Bribe">
+                <input class="btn" type="submit" value="Spend a Night" name="Spend a Night">
             </form>
         </div>
         <div class="main-stats">

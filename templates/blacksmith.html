@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/main.css">
+    <title>Game</title>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="title" style="margin: 1%;">Blacksmith</h1>
+        <img src="https://1.bp.blogspot.com/-LNafFrEGDjU/YJZtO9N4seI/AAAAAAAAEbY/cw12U6WWf3ExED7A5YjNJnWY0HBYAVEVwCLcBGAsYHQ/s1200/Fantasy%2BBlacksmith%2BEscape%2BFrom%2BThe%2BForge%2BPC%2BGame%2BFree%2BDownload%2B2.jpg">
+        <h3>
+            Welcome to balcksmith. If you want to upgrade your weapon that will cost you 25 gold
+            but if you want just get your weapon fix that would be 5 gold.
+        </h3>
+        <div class="message">
+            {{message | safe}}
+        </div>
+        <div class="warning_message">
+            {{warning_message | safe}}
+        </div>
+        <div class="btn-grid">
+            <form method="post" action="/blacksmith">
+                <input class="game-btn" type="submit" value="Upgrade" name="Upgrade">
+                <input class="game-btn" type="submit" value="Fix" name="Fix">
+                <input class="game-btn" type="submit" value="Village" name="Village">
+        </div>
+        <div class="main-stats">
+            <h3>Health: {{health | safe}} &nbsp;&nbsp; Cheese: {{cheese |safe }} &nbsp;&nbsp; Arrows: {{arrows | safe}} &nbsp;&nbsp; Gold: {{gold | safe}}</h3>
+        </div>
+    </div>
+
+</body>
+</html>

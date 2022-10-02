@@ -5,15 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/main.css">
-    <title>Menu</title>
+    <title>Event</title>
 </head>
 <body>
     <div class="container">
-        <h1 class="title">Coming soon(ish)...</h1>
-        <div class="btn-grid">
-            <a href="{{ url_for('epilogue') }}"><button class="bottom-btn">Let him live</button></a>
-            <a href="{{ url_for('epilogue') }}"><button class="bottom-btn">Kill him</button></a>
+        <h1 class="title"></h1>
+        <div class="">
+            <h3>{{post_event_text | safe}}</h3>
         </div>
+        <img src="{{image}}"> <br>
+        <a href="{{ url_for('camp') }}"><button class="btn">Continue</button></a>
     </div>
 </body>
 </html>

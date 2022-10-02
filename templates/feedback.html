@@ -9,9 +9,14 @@
 </head>
 <body>
     <div class="container">
+        <h1>Feedback</h1>
         <p>
-            Coming soon(ish)
+            If you found a bug or have some ideas, please write them here.
         </p>
+        <form method ="post" action="/feedback">
+            <input class="input" title="feedback" type="text" name="feedback" required> <br>
+            <button type="submit" class="game-btn" style="max-width: 30%;">Submit</button>
+        </form>
         <a href="{{ url_for('menu') }}"><button class="btn">Back</button></a>
     </div>
 </body>
